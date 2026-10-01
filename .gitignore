@@ -1,0 +1,16 @@
+# Database
+*.db
+*.db-journal
+
+# Binaries
+carsAPI
+/bin/
+
+# Environment files
+.env
+.env.local
+
+# OS & IDE
+.DS_Store
+.idea/
+.vscode/
