@@ -1,13 +1,17 @@
 FROM golang:1.24-alpine AS builder
 
 WORKDIR /app
-COPY carsAPI.go .
+RUN apk add --no-cache gcc musl-dev
+COPY go.mod go.sum ./
+RUN go mod download
 
-RUN go build -o carsAPI carsAPI.go
+COPY . .
+ENV CGO_ENABLED=1
+RUN go build -o carsAPI .
 
-FROM scratch
-
-COPY --from=builder /app/carsAPI /carsAPI
+FROM alpine
+WORKDIR /app
+COPY --from=builder /app/carsAPI /app/carsAPI
 
 EXPOSE 3015
-ENTRYPOINT ["/carsAPI"]
+ENTRYPOINT ["/app/carsAPI"]

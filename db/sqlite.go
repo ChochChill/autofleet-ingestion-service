@@ -2,11 +2,12 @@ package db
 
 import (
 	"database/sql"
+
 	_ "github.com/mattn/go-sqlite3"
 )
 
 func OpenDatabase() (*sql.DB, error) {
-	db, error := sql.Open("sqlite3", "cars.db")
+	db, error := sql.Open("sqlite3", "./data/cars.db")
 	if error != nil {
 		return nil, error
 	}
@@ -27,7 +28,7 @@ func CreateTables(db *sql.DB) error {
 	);
 	`
 	_, err := db.Exec(query)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 	return nil
